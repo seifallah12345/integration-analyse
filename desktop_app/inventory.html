@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plants Inventory</title>
+  <link rel="stylesheet" href="style_inventory.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .menu {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+
+    .menu a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .menu a:hover {
+      color: #f1f1f1;
+    }
+
+    .menu .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+    }
+
+    .menu-header img {
+      width: 100px;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .menu-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .menu-header span {
+      display: block;
+      color: #fff;
+      margin-top: 10px;
+    }
+
+    .submenu-content {
+      display: none;
+      background-color: #262626;
+      padding-left: 15px;
+    }
+
+    .submenu .submenu-toggle {
+      cursor: pointer;
+    }
+
+    .submenu-content a {
+      font-size: 20px;
+    }
+
+    .show {
+      display: block;
+    }
+
+    #main {
+      transition: margin-left 0.5s;
+      padding: 16px;
+    }
+
+    .menu-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+
+    .menu-open .menu-overlay {
+      display: block;
+    }
+
+    .menu-open #main {
+      margin-left: 250px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 5px;
+    }
+
+    .modal-content .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .modal-content .close:hover,
+    .modal-content .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .modal-header,
+    .modal-footer {
+      padding: 10px;
+    }
+
+    .modal-header {
+      font-size: 24px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .modal-footer {
+      border-top: 1px solid #ddd;
+      text-align: right;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .button-primary {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .button-primary:hover {
+      background-color: #45a049;
+    }
+
+    #viewLogsButton {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #viewLogsButton:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div id="myMenu" class="menu">
+    <div class="menu-header">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
+      <img src="userpic.jpg" alt="User Picture">
+      <span id="username"></span>
+    </div>
+    <div class="submenu">
+      <a class="submenu-toggle" onclick="toggleSubmenu('plantManagementSubmenu')">Plant Management &#9662;</a>
+      <div class="submenu-content" id="plantManagementSubmenu">
+        <a href="javascript:void(0)" onclick="openModal('addPlantModal')">Add a Plant</a>
+        <a href="javascript:void(0)" onclick="openModal('removePlantModal')">Remove Plant</a>
+        <a href="javascript:void(0)" onclick="openModal('editPlantModal')">Edit Plant</a>
+      </div>
+    </div>
+  </div>
+  <div id="main">
+    <span style="font-size:30px;cursor:pointer" onclick="openMenu()">&#9776; Open Menu</span>
+    <h1>Plants Inventory</h1>
+    <div id="totalPlants"></div>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Plant ID</th>
+          <th>Provenance</th>
+          <th>Description</th>
+          <th>Stage</th>
+          <th>Entreposage</th>
+          <th>Status</th>
+          <th>Date Added</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="plants">
+        <!-- Plant rows will be inserted here by JavaScript -->
+      </tbody>
+    </table>
+    <div id="qrcodeContainer"></div>
+    <button id="viewLogsButton">View Logs</button>
+  </div>
+  <div class="menu-overlay" onclick="closeMenu()"></div>
+
+  <!-- Add Plant Modal -->
+  <div id="addPlantModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('addPlantModal')">&times;</span>
+      <div class="modal-header">Add a Plant</div>
+      <div class="modal-body">
+        <label for="addPlantName">Name:</label>
+        <input type="text" id="addPlantName"><br>
+        <label for="addPlantID">Plant ID:</label>
+        <input type="text" id="addPlantID"><br>
+        <label for="addPlantProvenance">Provenance:</label>
+        <input type="text" id="addPlantProvenance"><br>
+        <label for="addPlantDescription">Description:</label>
+        <input type="text" id="addPlantDescription"><br>
+        <label for="addPlantStage">Stage:</label>
+        <input type="text" id="addPlantStage"><br>
+        <label for="addPlantEntreposage">Entreposage:</label>
+        <input type="text" id="addPlantEntreposage"><br>
+        <label for="addPlantStatus">Status:</label>
+        <input type="text" id="addPlantStatus">
+      </div>
+      <div class="modal-footer">
+        <button id="addPlantButton" onclick="addPlant()">Add</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Remove Plant Modal -->
+  <div id="removePlantModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('removePlantModal')">&times;</span>
+      <div class="modal-header">Remove Plant</div>
+      <div class="modal-body">
+        <label for="removePlantID">Plant ID:</label>
+        <input type="text" id="removePlantID">
+      </div>
+      <div class="modal-footer">
+        <button id="removePlantButton" onclick="removePlant()">Remove</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Plant Modal -->
+  <div id="editPlantModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('editPlantModal')">&times;</span>
+      <div class="modal-header">Edit Plant</div>
+      <div class="modal-body">
+        <label for="editPlantID">Plant ID:</label>
+        <input type="text" id="editPlantID"><br>
+        <label for="editPlantName">Name:</label>
+        <input type="text" id="editPlantName"><br>
+        <label for="editPlantProvenance">Provenance:</label>
+        <input type="text" id="editPlantProvenance"><br>
+        <label for="editPlantDescription">Description:</label>
+        <input type="text" id="editPlantDescription"><br>
+        <label for="editPlantStage">Stage:</label>
+        <input type="text" id="editPlantStage"><br>
+        <label for="editPlantEntreposage">Entreposage:</label>
+        <input type="text" id="editPlantEntreposage"><br>
+        <label for="editPlantStatus">Status:</label>
+        <input type="text" id="editPlantStatus">
+      </div>
+      <div class="modal-footer">
+        <button id="editPlantButton" onclick="editPlant()">Edit</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="qrcode.min.js"></script>
+  <script src="renderer.js"></script>
+  <script>
+    function openMenu() {
+      document.getElementById("myMenu").style.width = "250px";
+      document.body.classList.add("menu-open");
+    }
+
+    function closeMenu() {
+      document.getElementById("myMenu").style.width = "0";
+      document.body.classList.remove("menu-open");
+    }
+
+    function toggleSubmenu(submenuId) {
+      const submenuContent = document.getElementById(submenuId);
+      submenuContent.classList.toggle("show");
+    }
+
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = "block";
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = "none";
+    }
+
+    // Close modals when clicking outside
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        closeModals();
+      }
+    }
+
+    function closeModals() {
+      document.querySelectorAll('.modal').forEach(modal => modal.style.display = 'none');
+    }
+
+    // Functions for handling plant actions
+    function addPlant() {
+      const name = document.getElementById('addPlantName').value;
+      const plant_id = document.getElementById('addPlantID').value;
+      const provenance = document.getElementById('addPlantProvenance').value;
+      const description = document.getElementById('addPlantDescription').value;
+      const stage = document.getElementById('addPlantStage').value;
+      const entreposage = document.getElementById('addPlantEntreposage').value;
+      const status = document.getElementById('addPlantStatus').value;
+
+      window.electron.ipcRenderer.send('add-plant', {
+        name, plant_id, provenance, description, stage, entreposage, status
+      });
+    }
+
+    function removePlant() {
+      const plant_id = document.getElementById('removePlantID').value;
+      window.electron.ipcRenderer.send('remove-plant', { plant_id });
+    }
+
+    function editPlant() {
+      const plant_id = document.getElementById('editPlantID').value;
+      const name = document.getElementById('editPlantName').value;
+      const provenance = document.getElementById('editPlantProvenance').value;
+      const description = document.getElementById('editPlantDescription').value;
+      const stage = document.getElementById('editPlantStage').value;
+      const entreposage = document.getElementById('editPlantEntreposage').value;
+      const status = document.getElementById('editPlantStatus').value;
+
+      window.electron.ipcRenderer.send('edit-plant', {
+        plant_id, name, provenance, description, stage, entreposage, status
+      });
+    }
+
+    // Setting username below the picture
+    window.electron.ipcRenderer.on('set-username', (username) => {
+      document.getElementById('username').textContent = username;
+    });
+  </script>
+</body>
+</html>
