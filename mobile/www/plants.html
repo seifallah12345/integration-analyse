@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Plants</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard">
+    <h1>Dashboard</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html" id="home">Home</a></li>
+        <li><a href="plants.html" id="plants">Plants</a></li>
+        <li><a href="entreposage.html" id="entreposage">ENTREPOSAGE</a></li>
+        <li><a href="users.html" id="users">Users</a></li>
+        <li><a href="logs.html" id="logs">Logs</a></li>
+        <li><a href="import.html" id="import">Import Data</a></li>
+        <li><a href="#" id="logout">Logout</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="container">
+    <h1>Manage Plants</h1>
+    <div>
+      <p>Total Plants: <span id="totalPlants">0</span></p>
+      <p>Active Plants: <span id="activePlants">0</span></p>
+      <p>Inactive Plants: <span id="inactivePlants">0</span></p>
+    </div>
+    <form id="addPlantForm">
+      <h2>Add Plant</h2>
+      <label for="etatDeSante">Etat de santé:</label>
+      <input type="text" id="etatDeSante" name="etatDeSante" required>
+      <label for="date">Date (YYYY/MM/DD):</label>
+      <input type="date" id="date" name="date" required>
+      <label for="identification">Identification:</label>
+      <input type="text" id="identification" name="identification" required>
+      <label for="provenance">Provenance:</label>
+      <input type="text" id="provenance" name="provenance" required>
+      <label for="description">Description:</label>
+      <textarea id="description" name="description"></textarea>
+      <label for="stade">Stade:</label>
+      <input type="text" id="stade" name="stade" required>
+      <label for="entreposageSelect">Entreposage:</label>
+      <select id="entreposageSelect" name="entreposage" required></select>
+      <label for="dateDeRetrait">Date de retrait:</label>
+      <input type="date" id="dateDeRetrait" name="dateDeRetrait">
+      <label for="itemRetire">Item Retiré de l'inventaire:</label>
+      <input type="text" id="itemRetire" name="itemRetire" required>
+      <label for="responsableDestructionSelect">Responsable Destruction:</label>
+      <select id="responsableDestructionSelect" name="responsableDestruction" required></select>
+      <label for="note">Note:</label>
+      <textarea id="note" name="note"></textarea>
+      <label for="actifInactif">Actif/Inactif:</label>
+      <select id="actifInactif" name="actifInactif" required>
+        <option value="Actif">Actif</option>
+        <option value="Inactif">Inactif</option>
+      </select>
+      <button type="submit">Add Plant</button>
+    </form>
+
+    <h2>Existing Plants</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Etat de santé</th>
+          <th>DATE (YYYY/MM/DD)</th>
+          <th>IDENTIFICATION</th>
+          <th>PROVENANCE</th>
+          <th>DESCRIPTION</th>
+          <th>STADE</th>
+          <th>ENTREPOSAGE</th>
+          <th>Date de retrait</th>
+          <th>ITEM RETIRÉ DE L'INVENTAIRE</th>
+          <th>RESPONSABLE DESTRUCTION</th>
+          <th>NOTE</th>
+          <th>Actif/Inactif</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows of the table will be dynamically inserted here -->
+      </tbody>
+    </table>
+  </div>
+  <script src="plants.js"></script>
+</body>
+</html>

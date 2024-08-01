@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plant Data Table</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard">
+    <h1>Dashboard</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html" id="home">Home</a></li>
+        <li><a href="entreposage.html" id="ENTREPOSAGE
+          ">ENTREPOSAGE
+        </a></li>
+        <li><a href="users.html" id="users">users</a></li>
+        <li><a href="plants.html" id="plants">Plants</a></li>
+        <li><a href="logs.html" id="logs">logs</a></li>
+        <li><a href="import.html" id="import">import</a></li>
+        <li><a href="#" id="logout">Logout</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="container">
+    <h1>Plant Data Table</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Etat de santé</th>
+          <th>DATE (YYYY/MM/DD)</th>
+          <th>IDENTIFICATION</th>
+          <th>PROVENANCE</th>
+          <th>DESCRIPTION</th>
+          <th>STADE</th>
+          <th>ENTREPOSAGE</th>
+          <th>Date de retrait</th>
+          <th>ITEM RETIRÉ DE L'INVENTAIRE</th>
+          <th>RESPONSABLE DESTRUCTION</th>
+          <th>NOTE</th>
+          <th>Actif/Inactif</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows of the table will be dynamically inserted here -->
+      </tbody>
+    </table>
+  </div>
+  <script src="plants.js"></script>
+</body>
+</html>

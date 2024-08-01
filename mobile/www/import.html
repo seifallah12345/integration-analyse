@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Import Data</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard">
+    <h1>Dashboard</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html" id="home">Home</a></li>
+        <li><a href="plants.html" id="plants">Plants</a></li>
+        <li><a href="entreposage.html" id="entreposage">ENTREPOSAGE</a></li>
+        <li><a href="users.html" id="users">Users</a></li>
+        <li><a href="logs.html" id="logs">Logs</a></li>
+        <li><a href="import.html" id="import">Import Data</a></li>
+        <li><a href="#" id="logout">Logout</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="container">
+    <h1>Import Data</h1>
+    <form id="importForm" enctype="multipart/form-data">
+      <label for="excelFile">Select Excel File:</label>
+      <input type="file" id="excelFile" name="excelFile" accept=".xlsx, .xls" required>
+      <button type="submit">Upload and Import</button>
+    </form>
+    <p id="message"></p>
+  </div>
+  <script src="import.js"></script>
+</body>
+</html>
+  
